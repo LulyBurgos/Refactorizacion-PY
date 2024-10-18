@@ -1,0 +1,61 @@
+def ingresar_puntuacion_y_comentario():
+    """Permite al usuario ingresar una puntuación y un comentario."""
+    while True:
+        print('Por favor, introduzca una puntuación en una escala de 1 a 5')
+        point = input()
+        
+        if point.isdecimal():
+            point = int(point)
+            if point < 1 or point > 5:
+                print('Indíquelo en una escala de 1 a 5')
+            else:
+                print('Por favor, introduzca un comentario')
+                comment = input()
+                post = f'punto: {point} comentario: {comment}'
+                with open("data.txt", 'a') as file_pc:
+                    file_pc.write(f'{post}\n')
+                print('Puntuación y comentario guardados exitosamente.')
+                break
+        else:
+            print('Por favor, introduzca la puntuación en números')
+
+def comprobar_resultados():
+    """Muestra los resultados hasta la fecha."""
+    print('Resultados hasta la fecha:')
+    try:
+        with open("data.txt", "r") as read_file:
+            contenido = read_file.read()
+            if contenido:
+                print(contenido)
+            else:
+                print("No hay resultados guardados.")
+    except FileNotFoundError:
+        print("No se encontró el archivo de resultados.")
+
+def menu():
+    """Muestra el menú y maneja las opciones del usuario."""
+    while True:
+        print('Seleccione el proceso que desea aplicar')
+        print('1: Ingresar puntuación y comentario')
+        print('2: Comprobar los resultados obtenidos hasta ahora.')
+        print('3: Finalizar')
+        
+        num = input()
+        
+        if num.isdecimal():
+            num = int(num)
+            if num == 1:
+                ingresar_puntuacion_y_comentario()
+            elif num == 2:
+                comprobar_resultados()
+            elif num == 3:
+                print('Finalizando')
+                break
+            else:
+                print('Introduzca un número del 1 al 3')
+        else:
+            print('Introduzca un número del 1 al 3')
+
+# Iniciar el programa
+if __name__ == "__main__":
+    menu()
